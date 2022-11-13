@@ -1,4 +1,6 @@
-#[derive(Clone, PartialEq)]
+use serde::Deserialize;
+
+#[derive(Clone, PartialEq, Deserialize, Debug)]
 pub struct Video {
     pub id: usize,
     pub title: String,
