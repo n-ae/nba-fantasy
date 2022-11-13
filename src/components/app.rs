@@ -1,6 +1,9 @@
-use yew::{function_component, html};
+use yew::{function_component, html, use_state, Callback};
 
-use crate::components::videos_list::*;
+use crate::model::video::Video;
+
+use crate::components::video_details::VideoDetails;
+use crate::components::videos_list::VideosList;
 
 #[function_component(App)]
 pub fn app() -> Html {
@@ -31,17 +34,26 @@ pub fn app() -> Html {
         },
     ];
 
+    let selected_video = use_state(|| None);
+    let on_video_select = {
+        let selected_video = selected_video.clone();
+        Callback::from(move |video: Video| selected_video.set(Some(video)))
+    };
+
+    let details = selected_video.as_ref().map(|video| {
+        html! {
+            <VideoDetails video={video.clone()} />
+        }
+    });
+
     html! {
         <>
             <h1>{ "RustConf Explorer" }</h1>
             <div>
                 <h3>{"Videos to watch"}</h3>
-                <VideosList videos={videos} />
+               <VideosList videos={videos} on_click={on_video_select.clone()} />
             </div>
-            <div>
-                <h3>{ "John Doe: Building and breaking things" }</h3>
-                <img src="https://via.placeholder.com/640x360.png?text=Video+Player+Placeholder" alt="video thumbnail" />
-            </div>
+            { for details }
         </>
     }
 }
