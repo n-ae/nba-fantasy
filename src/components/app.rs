@@ -1,10 +1,10 @@
 use gloo_net::http::Request;
 use yew::{function_component, html, use_effect_with_deps, use_state, Callback};
 
-use crate::model::video::Video;
-
 use crate::components::video_details::VideoDetails;
 use crate::components::videos_list::VideosList;
+use crate::components::login::Login;
+use crate::model::video::Video;
 
 #[function_component(App)]
 pub fn app() -> Html {
@@ -44,6 +44,7 @@ pub fn app() -> Html {
             <h1>{ "RustConf Explorer" }</h1>
             <div>
                 <h3>{"Videos to watch"}</h3>
+                <Login/>
                 <VideosList videos={(*videos).clone()} on_click={on_video_select.clone()} />
             </div>
             { for details }
