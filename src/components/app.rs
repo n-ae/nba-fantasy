@@ -8,6 +8,8 @@ use crate::model::video::Video;
 
 #[function_component(App)]
 pub fn app() -> Html {
+    log::debug!("App Component entered...");
+
     let videos = use_state(|| vec![]);
     {
         let videos = videos.clone();

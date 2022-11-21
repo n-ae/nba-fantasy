@@ -8,6 +8,7 @@ version = "0.1.0"
 [dependencies]
 gloo-net = "0.2.4"
 log = "0.4.17"
+reqwest = "0.11.12"
 serde = "1.0.147"
 wasm-bindgen-futures = "0.4.33"
 wasm-logger = "0.2.0"
