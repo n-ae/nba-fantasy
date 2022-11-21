@@ -3,6 +3,7 @@ For frontend run:
 ```
 export YAHOO_OAUTH_CLIENT_ID="<client_id>" ;\
     export YAHOO_OAUTH_TOKEN_URL="https://localhost/api/token" ;\
+    cd frontend ;\
     trunk serve
 ```
 
@@ -18,9 +19,8 @@ and then for backend run:
 export YAHOO_OAUTH_CLIENT_ID="<client_id>" ;\
     export YAHOO_OAUTH_CLIENT_SECRET="<client_secret>" ;\
     export CORS_ALLOWED_ORIGIN="<fe_https_endpoint>" ;\
-    pushd ./backend ;\
-    cargo run ;\
-    popd
+    cd backend ;\
+    cargo run
 ```
 
 If CORS errors optionally run below in the helper repo as proxy:
