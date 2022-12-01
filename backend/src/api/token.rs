@@ -30,9 +30,9 @@ pub async fn token_func_async(
     req: TokenBody,
 ) -> oauth2::StandardTokenResponse<oauth2::EmptyExtraTokenFields, oauth2::basic::BasicTokenType> {
     let client = BasicClient::new(
-        ClientId::new(std::env!("YAHOO_OAUTH_CLIENT_ID").to_string()),
+        ClientId::new(dotenv!("YAHOO_OAUTH_CLIENT_ID").to_string()),
         Some(ClientSecret::new(
-            std::env!("YAHOO_OAUTH_CLIENT_SECRET").to_string(),
+            dotenv!("YAHOO_OAUTH_CLIENT_SECRET").to_string(),
         )),
         AuthUrl::new("http://auth".to_string()).expect("blah"),
         Some(

@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate dotenv_codegen;
+
 mod api;
 
 #[cfg(not(debug_assertions))]
