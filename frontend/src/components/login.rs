@@ -20,11 +20,10 @@ impl Component for Login {
             OAuth2Dispatcher::<Client>::new().logout();
         });
 
-        log::debug!("YAHOO_OAUTH_CLIENT_ID\n{}", std::env!("YAHOO_OAUTH_CLIENT_ID"));
         let config = Config {
-            client_id: std::env!("YAHOO_OAUTH_CLIENT_ID").to_string(),
+            client_id: dotenv!("YAHOO_OAUTH_CLIENT_ID").to_string(),
             auth_url: "https://api.login.yahoo.com/oauth2/request_auth".into(),
-            token_url: std::env!("YAHOO_OAUTH_TOKEN_URL").to_string(),
+            token_url: dotenv!("YAHOO_OAUTH_TOKEN_URL").to_string(),
         };
 
         html!(
