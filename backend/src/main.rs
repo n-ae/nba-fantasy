@@ -7,14 +7,14 @@ mod api;
 mod lambda;
 #[cfg(not(debug_assertions))]
 #[tokio::main]
-async fn main() -> Result<(), lambda_runtime::Error> {
+async fn main() -> Result<(), lambda_http::Error> {
     lambda::run().await
 }
 
 #[cfg(debug_assertions)]
-mod mvc;
+mod debug;
 #[cfg(debug_assertions)]
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    mvc::run().await
+    debug::mvc::run().await
 }

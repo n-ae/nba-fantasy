@@ -1,4 +1,3 @@
-use actix_web::{post, web::Form, web::Json};
 use log::{error, info};
 use oauth2::basic::BasicClient;
 use oauth2::reqwest::async_http_client;
@@ -14,16 +13,6 @@ pub struct TokenBody {
     code: String,
     code_verifier: String,
     redirect_uri: String,
-}
-
-#[post("/token")]
-pub async fn token(
-    body: Form<TokenBody>,
-) -> Json<oauth2::StandardTokenResponse<oauth2::EmptyExtraTokenFields, oauth2::basic::BasicTokenType>>
-{
-    let req = body.into_inner();
-    println!("{:?}", req);
-    Json(token_func_async(req).await)
 }
 
 pub async fn token_func_async(
