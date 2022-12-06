@@ -15,3 +15,5 @@ Cargo.lock
 
 # trunk serve
 dist/
+
+*.env
