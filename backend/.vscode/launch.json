@@ -9,7 +9,12 @@
       "request": "launch",
       "name": "Debug executable 'backend'",
       "cargo": {
-        "args": ["build", "--bin=backend", "--package=backend"],
+        "args": [
+          "build",
+          "--bin=backend",
+          "--package=backend",
+          "--features=debug"
+        ],
         "filter": {
           "name": "backend",
           "kind": "bin"

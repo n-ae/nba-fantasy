@@ -13,7 +13,12 @@ EOT
 
 ## Local Development Only
 
-When debugging, toggle debug dependencies _back_ on in Cargo.toml.
+When debugging, toggle add debug feature on to the build, i.e:
+
+```
+cargo build --features=debug
+```
+
 Run for local development:
 
 ```

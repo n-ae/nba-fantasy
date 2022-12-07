@@ -1,7 +1,6 @@
-
-#[cfg(debug_assertions)]
+#[cfg(feature = "debug")]
 pub mod mvc {
-    #[cfg(debug_assertions)]
+    #[cfg(feature = "debug")]
     pub async fn run() -> std::io::Result<()> {
         use actix_cors::Cors;
         use actix_web::{http, middleware::Logger, web::scope, App, HttpServer};

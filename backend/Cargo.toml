@@ -25,8 +25,17 @@ tracing = {version = "0.1", features = ["log"]}
 tracing-subscriber = {version = "0.3", default-features = false, features = ["fmt"]}
 
 # debug dependencies
-# actix-cors = "0.6.4"
-# actix-files = "0.6"
-# actix-web = {version = "^4", features = ["openssl"]}
-# actix-web-lab = "0.16.1"
-# openssl = "0.10"
+actix-cors = {version = "0.6.4", optional = true}
+actix-files = {version = "0.6", optional = true}
+actix-web = {version = "^4", features = ["openssl"], optional = true}
+actix-web-lab = {version = "0.16.1", optional = true}
+openssl = {version = "0.10", optional = true}
+
+[features]
+debug = [
+  "dep:actix-cors",
+  "dep:actix-files",
+  "dep:actix-web",
+  "dep:actix-web-lab",
+  "dep:openssl",
+]
