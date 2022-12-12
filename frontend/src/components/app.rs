@@ -3,8 +3,22 @@ use yew::{function_component, html, use_effect_with_deps, use_state, Callback};
 
 use crate::components::video_details::VideoDetails;
 use crate::components::videos_list::VideosList;
-use crate::components::login::Login;
 use crate::model::video::Video;
+
+use crate::components::functional::ViewAuthInfoFunctional;
+use yew::prelude::*;
+use yew_oauth2::prelude::*;
+
+use yew_oauth2::oauth2::{Client, Config, LocationRedirect, OAuth2};
+use yew_router::prelude::{Router, RouterAnchor, Switch};
+
+#[derive(Switch, Debug, Clone, PartialEq, Eq)]
+pub enum AppRoute {
+    #[to = "/function"]
+    Function,
+    #[to = "/"]
+    Index,
+}
 
 #[function_component(App)]
 pub fn app() -> Html {
@@ -41,15 +55,68 @@ pub fn app() -> Html {
         }
     });
 
+    let login = |_: MouseEvent| {
+        OAuth2Dispatcher::<Client>::new().start_login();
+    };
+    let logout = |_: MouseEvent| {
+        OAuth2Dispatcher::<Client>::new().logout();
+    };
+
+    let config = Config {
+        client_id: dotenv!("YAHOO_OAUTH_CLIENT_ID").to_string(),
+        auth_url: "https://api.login.yahoo.com/oauth2/request_auth".into(),
+        token_url: dotenv!("YAHOO_OAUTH_TOKEN_URL").to_string(),
+    };
+
     html! {
         <>
-            <h1>{ "RustConf Explorer" }</h1>
-            <div>
-                <h3>{"Videos to watch"}</h3>
-                <Login/>
-                <VideosList videos={(*videos).clone()} on_click={on_video_select.clone()} />
-            </div>
-            { for details }
+        <OAuth2
+            {config}
+            >
+            <Failure>
+                <ul>
+                    <li><FailureMessage/></li>
+                </ul>
+            </Failure>
+            <Authenticated>
+                <p>
+                    <button onclick={logout}>{ "Logout" }</button>
+                </p>
+                <ul>
+                    <li><RouterAnchor<AppRoute> route={AppRoute::Index}> { "Index" } </RouterAnchor<AppRoute>></li>
+                    <li><RouterAnchor<AppRoute> route={AppRoute::Function}> { "Function" } </RouterAnchor<AppRoute>></li>
+                </ul>
+                <Router<AppRoute>
+                    render = { Router::render(|switch: AppRoute| {
+                        match switch {
+                            AppRoute::Index => html!(<p> { "You are logged in"} </p>),
+                            AppRoute::Function => html!(<ViewAuthInfoFunctional />),
+                        }
+                    })}
+                />
+            </Authenticated>
+            <NotAuthenticated>
+                <Router<AppRoute>
+                    render = { Router::render(move |switch: AppRoute| {
+                        match switch {
+                            AppRoute::Index => html!(
+                                <>
+                                    <p>
+                                        { "You need to log in" }
+                                    </p>
+                                    <p>
+                                        <button onclick={login.clone()}>{ "Login" }</button>
+                                    </p>
+                                </>
+                            ),
+                            _ => html!(<LocationRedirect logout_href="/" />),
+                        }
+                    })}
+                />
+            </NotAuthenticated>
+        </OAuth2>
+        <VideosList videos={(*videos).clone()} on_click={on_video_select.clone()} />
+        { for details }
         </>
     }
 }
