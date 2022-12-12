@@ -1,4 +1,4 @@
 pub mod app;
-pub mod video_details;
-pub mod videos_list;
-pub mod login;
+mod video_details;
+mod videos_list;
+mod login;
