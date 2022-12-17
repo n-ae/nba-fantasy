@@ -46,7 +46,7 @@ jobs:
       - name: Build release
         run: |
           cd frontend
-          trunk build --public-url /${{ github.repository }} --release
+          trunk build --public-url /${{ github.repository#*/ }} --release
         shell: sh
       - name: Setup Pages
         uses: actions/configure-pages@v2
