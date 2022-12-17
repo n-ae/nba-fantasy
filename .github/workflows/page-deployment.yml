@@ -37,6 +37,12 @@ jobs:
         with:
           toolchain: stable
           target: wasm32-unknown-unknown
+      - name: Set Build Environment
+        run: |
+          cd frontend
+          touch .env
+          echo YAHOO_OAUTH_CLIENT_ID=${{ secrets.YAHOO_OAUTH_CLIENT_ID }} >> .env
+          echo YAHOO_OAUTH_TOKEN_URL=${{ secrets.YAHOO_OAUTH_TOKEN_URL }} >> .env
       - name: Build release
         run: |
           cd frontend
