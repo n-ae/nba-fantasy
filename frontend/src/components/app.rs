@@ -14,9 +14,9 @@ use yew_router::prelude::{Router, RouterAnchor, Switch};
 
 #[derive(Switch, Debug, Clone, PartialEq, Eq)]
 pub enum AppRoute {
-    #[to = "/#/function"]
+    #[to = "/function"]
     Function,
-    #[to = "/#/"]
+    #[to = "/"]
     Index,
 }
 
