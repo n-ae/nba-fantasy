@@ -19,8 +19,10 @@ pub fn view_info() -> Html {
                 wasm_bindgen_futures::spawn_local(async move {
                     let auth3 = auth2.expect("TODO: add error handling");
                     let asd2 = auth3.authentication().expect("TODO: add error handling");
+                    let standings_url = "https://fantasysports.yahooapis.com/fantasy/v2/league/418.l.9097/standings?format=json";
+                    let url = format!("{}/{}", dotenv!("CORS_ANYWHERE_ENDPOINT"), standings_url);
                     // let request = Request::get("https://cors-anywhere.herokuapp.com/https://fantasysports.yahooapis.com/fantasy/v2/league/418.l.9097/standings?format=json")
-                    let request = Request::get("https://fantasysports.yahooapis.com/fantasy/v2/league/418.l.9097/standings?format=json")
+                    let request = Request::get(url.as_str())
                         .header("Authorization", format!("Bearer {}", &asd2.access_token).as_str())
                         // .header("Access-Control-Allow-Origin", "https://43c5-46-1-240-92.eu.ngrok.io")
                         // .header("Access-Control-Allow-Methods", "GET")
