@@ -10,16 +10,6 @@ on:
           - test
           - prod
         required: true
-      region:
-        type: choice
-        description: AWS Region
-        options:
-          - us-east-1
-          - ap-east-1
-          - ap-northeast-2
-          - eu-central-1
-          - (All)
-        required: true
 
 jobs:
   build:
