@@ -10,7 +10,6 @@ jobs:
       - name: Set
         id: set
         run: |
-          echo "::set-output name=value::$region_value"
           echo "my_var=my_value" >> $GITHUB_OUTPUT
       - name: Read
         run: |
