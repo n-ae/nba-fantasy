@@ -10,7 +10,8 @@ jobs:
       - name: Set
         id: set
         run: |
-          echo "my_var=my_value" >> $GITHUB_OUTPUT
+          my_var="my_value_2"
+          echo "my_var=$(my_value)" >> $GITHUB_OUTPUT
       - name: Read
         run: |
           echo ${{ steps.set.outputs.my_var }}
