@@ -18,3 +18,6 @@ jobs:
       - name: Echo Input
         run: |
           echo input_1: ${{ inputs.input_1 }}
+      - name: Echo Eko
+        run: |
+          echo EKO
