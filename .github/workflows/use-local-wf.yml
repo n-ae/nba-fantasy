@@ -5,6 +5,6 @@ on:
 
 jobs:
   build:
-    uses: "./echo-branch.yml@test"
+    uses: "./.github/workflows/echo-branch.yml@test"
     with:
       input_1: "This is input value 1"
