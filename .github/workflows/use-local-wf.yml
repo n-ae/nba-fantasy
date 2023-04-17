@@ -1,0 +1,10 @@
+name: Use Local WF
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ".github/workflows/echo-branch.yml@test"
+    with:
+      input_1: "This is input value 1"

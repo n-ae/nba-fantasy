@@ -1,0 +1,20 @@
+name: Echo Branch
+
+on:
+  workflow_call:
+    inputs:
+      input_1:
+        type: string
+        required: true
+
+jobs:
+  build:
+    runs-on:
+      - ubuntu-latest
+    steps:
+      - name: Echo Branch
+        run: |
+          echo github.ref: ${{ github.ref }}
+      - name: Echo Input
+        run: |
+          echo input_1: ${{ inputs.input_1 }}
