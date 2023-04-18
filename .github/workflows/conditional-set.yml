@@ -16,7 +16,7 @@ jobs:
         name: Set Destination Prefix
         if: always()
         run: |
-          echo "value=fromJSON('["stag", "prod"]')[${{ inputs.env }} == "prod"]" >> $GITHUB_OUTPUT
+          echo "value=$(fromJSON('["stag", "prod"]')[${{ inputs.env }} == "prod"])" >> $GITHUB_OUTPUT
       - name: Echo Value
         run: |
           echo value: ${{ steps.set-destination-prefix.outputs.value }}
