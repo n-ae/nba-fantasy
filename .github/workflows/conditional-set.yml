@@ -16,7 +16,7 @@ jobs:
         name: Set Destination Prefix
         if: always()
         run: |
-          prefix=$(fromJSON('["stag", "prod"]')[${{ inputs.env }} == 'prod'])
+          prefix=$( [[ ${{ inputs.env }} == "prod" ]] && echo "prod" || echo "stag" )
           echo "value=$prefix" >> $GITHUB_OUTPUT
       - name: Echo Value
         run: |
