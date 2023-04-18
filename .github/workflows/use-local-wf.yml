@@ -9,4 +9,5 @@ jobs:
     # uses: "bali-ibrahim/nba-fantasy/.github/workflows/echo-branch.yml@test"
     uses: "./.github/workflows/conditional-set.yml"
     with:
-      env: "stg"
+      # env: "stg"
+      env: "prod"
