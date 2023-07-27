@@ -1,11 +1,11 @@
-terraform {
-  required_providers {
-    # aws = {
-    #   source  = "hashicorp/aws"
-    #   version = "5.8.0"
-    # }
-  }
-}
+# terraform {
+#   required_providers {
+#     # aws = {
+#     #   source  = "hashicorp/aws"
+#     #   version = "5.8.0"
+#     # }
+#   }
+# }
 
 # provider "aws" {
 #   profile = "username"
@@ -20,14 +20,7 @@ resource "null_resource" "ngrok_tunnel" {
   triggers = { always_run = "${timestamp()}" }
 
   provisioner "local-exec" {
-    command = "ngrok http 8080 > /dev/null & echo done"
-  }
-
-  provisioner "local-exec" {
-    command = <<-EOT
-      curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url' \
-        > ${local.ngrok_tunnel_filename}
-    EOT
+    command = "./ngrok.sh"
   }
 
   provisioner "local-exec" {
@@ -35,16 +28,21 @@ resource "null_resource" "ngrok_tunnel" {
     command = <<-EOT
       pid="$(pgrep ngrok)"
       kill -9 $pid
-      wait $pid 2>/dev/null
     EOT
   }
 }
 
-data "local_file" "ngrok_tunnel_url" {
-  filename   = local.ngrok_tunnel_filename
-  depends_on = ["null_resource.ngrok_tunnel"]
+data "external" "curl" {
+  program = [
+    "bash",
+    "-c",
+    "./curl.sh"
+  ]
+  depends_on = [
+    null_resource.ngrok_tunnel,
+  ]
 }
 
 output "ngrok_tunnel_url" {
-  value = data.local_file.ngrok_tunnel_url.content
+  value = data.external.curl.result.result
 }
