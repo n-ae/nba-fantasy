@@ -1,17 +1,3 @@
-# terraform {
-#   required_providers {
-#     # aws = {
-#     #   source  = "hashicorp/aws"
-#     #   version = "5.8.0"
-#     # }
-#   }
-# }
-
-# provider "aws" {
-#   profile = "username"
-# }
-
-
 locals {
   ngrok_tunnel_filename = "ngrok_tunnel.url"
 }
@@ -27,7 +13,7 @@ resource "null_resource" "ngrok_tunnel" {
     when    = destroy
     command = <<-EOT
       pid="$(pgrep ngrok)"
-      kill -9 $pid
+      kill -9 $pid &>/dev/null &
     EOT
   }
 }
@@ -41,8 +27,4 @@ data "external" "curl" {
   depends_on = [
     null_resource.ngrok_tunnel,
   ]
-}
-
-output "ngrok_tunnel_url" {
-  value = data.external.curl.result.result
 }
