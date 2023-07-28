@@ -19,3 +19,15 @@ module "frontend" {
 module "frontend-https-tunnel" {
   source = "./../../modules/https-tunnel"
 }
+
+# [DEBUG].[backend]
+# module "https-tunnel-for-backend-debug" {
+#   source        = "./../../modules/env.set_dotenv"
+#   project_name  = "backend"
+#   ENV_VAR_NAME  = "CORS_ALLOWED_ORIGIN"
+#   env_var_value = module.frontend-https-tunnel.url
+
+#   depends_on = [
+#     module.frontend-https-tunnel,
+#   ]
+# }
