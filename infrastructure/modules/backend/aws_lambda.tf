@@ -18,19 +18,24 @@ provider "aws" {
 locals {
   function_name    = "${var.stage}-backend"
   function_handler = "bootstrap"
+  package_file     = abspath("${path.module}/../../../backend/target/lambda/backend/bootstrap.zip")
 }
 
 resource "aws_lambda_function" "backend" {
-  filename         = var.package_file
+  filename         = local.package_file
   function_name    = local.function_name
   role             = "arn:aws:iam::502515897402:role/cargo-lambda-role-0b5b2467-4d2d-4433-bd9b-8e1166590954"
   handler          = local.function_handler
-  source_code_hash = filebase64sha256(var.package_file)
+  source_code_hash = filebase64sha256(local.package_file)
   runtime          = "provided.al2"
   publish          = var.stage == module.env.stages.prod
   # variables = {
   #   RUST_BACKTRACE = "1"
   # }
+
+  depends_on = [
+    null_resource.build,
+  ]
 }
 
 resource "aws_lambda_function_url" "backend" {
@@ -43,7 +48,7 @@ resource "aws_lambda_function_url" "backend" {
 }
 
 
-resource "aws_lambda_permission" "allow_bucket" {
+resource "aws_lambda_permission" "allow_invoke" {
   action                 = "lambda:InvokeFunctionUrl"
   function_name          = aws_lambda_function.backend.arn
   principal              = "*"

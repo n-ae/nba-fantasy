@@ -9,7 +9,3 @@ variable "stage" {
 variable "allow_origins" {
   type = list(string)
 }
-
-variable "package_file" {
-  type = string
-}

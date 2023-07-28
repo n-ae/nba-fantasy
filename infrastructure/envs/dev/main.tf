@@ -9,7 +9,6 @@ module "backend" {
     # "https://bali-ibrahim.github.io",
     module.frontend-https-tunnel.url,
   ]
-  package_file = abspath("./../../../backend/target/lambda/backend/bootstrap.zip")
 }
 
 module "frontend" {
