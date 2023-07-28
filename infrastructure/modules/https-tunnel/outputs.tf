@@ -1,3 +1,3 @@
-output "ngrok_tunnel_url" {
+output "url" {
   value = data.external.curl.result.result
 }

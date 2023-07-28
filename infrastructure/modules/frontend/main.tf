@@ -11,11 +11,7 @@ resource "null_resource" "frontend" {
   }
 
   provisioner "local-exec" {
-    command = <<-EOT
-      pushd ./../../../frontend
-      cargo clean
-      trunk serve &>/dev/null &
-    EOT
+    command = "${path.module}/trunk-serve.sh"
   }
 
   provisioner "local-exec" {

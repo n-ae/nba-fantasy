@@ -1,12 +1,8 @@
-locals {
-  ngrok_tunnel_filename = "ngrok_tunnel.url"
-}
-
 resource "null_resource" "ngrok_tunnel" {
   triggers = { always_run = "${timestamp()}" }
 
   provisioner "local-exec" {
-    command = "./ngrok.sh"
+    command = "${path.module}/ngrok.sh"
   }
 
   provisioner "local-exec" {
@@ -22,7 +18,7 @@ data "external" "curl" {
   program = [
     "bash",
     "-c",
-    "./curl.sh"
+    "${path.module}/curl.sh"
   ]
   depends_on = [
     null_resource.ngrok_tunnel,

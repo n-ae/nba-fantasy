@@ -27,7 +27,7 @@ resource "aws_lambda_function" "backend" {
   handler          = local.function_handler
   source_code_hash = filebase64sha256(var.package_file)
   runtime          = "provided.al2"
-  publish          = var.stage == module.env.stage.prod
+  publish          = var.stage == module.env.stages.prod
   # variables = {
   #   RUST_BACKTRACE = "1"
   # }
