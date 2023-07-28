@@ -7,3 +7,8 @@ module "backend" {
   ]
   package_file = abspath("./../../backend/target/lambda/backend/bootstrap.zip")
 }
+
+module "frontend" {
+  source          = "./../modules/frontend"
+  oauth_token_url = module.backend.function_url
+}
