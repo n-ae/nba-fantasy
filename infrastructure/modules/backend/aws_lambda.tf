@@ -16,6 +16,7 @@ provider "aws" {
 }
 
 locals {
+  is_prod          = var.stage == module.env.stages.prod
   function_name    = "${var.stage}-backend"
   function_handler = "bootstrap"
   package_file     = abspath("${path.module}/../../../backend/target/lambda/backend/bootstrap.zip")
@@ -28,10 +29,13 @@ resource "aws_lambda_function" "backend" {
   handler          = local.function_handler
   source_code_hash = filebase64sha256(local.package_file)
   runtime          = "provided.al2"
-  publish          = var.stage == module.env.stages.prod
-  # variables = {
-  #   RUST_BACKTRACE = "1"
-  # }
+  publish          = local.is_prod
+  environment {
+    variables = {
+      # Debugging would be easier in non production environments
+      RUST_BACKTRACE = !local.is_prod ? "1" : null
+    }
+  }
 
   depends_on = [
     null_resource.build,
