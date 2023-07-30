@@ -10,5 +10,5 @@ jobs:
       - name: Not Implemented Yet
         run: |
           printenv YAHOO_OAUTH_CLIENT_ID
-          echo ${{ secrets.YAHOO_OAUTH_TOKEN_URL}}
+          echo '${{ secrets.YAHOO_OAUTH_TOKEN_URL}}'
           echo ${{ secrets.CORS_REVERSE_PROXY_ENDPOINT}}
