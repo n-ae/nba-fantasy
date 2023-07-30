@@ -34,7 +34,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install Trunk
-        uses: jetli/trunk-action@v0.2.0
+        uses: jetli/trunk-action@v0.4.0
       - name: Install Rust Target
         uses: actions-rs/toolchain@v1
         with:
@@ -55,11 +55,11 @@ jobs:
           trunk build --public-url /${GITHUB_REPOSITORY#*/} --release
         shell: sh
       - name: Setup Pages
-        uses: actions/configure-pages@v2
+        uses: actions/configure-pages@v3
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v2
         with:
           path: "./frontend/dist"
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v2
