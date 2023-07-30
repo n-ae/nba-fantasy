@@ -24,24 +24,24 @@ pub enum AppRoute {
 pub fn app() -> Html {
     log::debug!("App Component entered...");
 
-    let videos = use_state(|| vec![]);
-    {
-        let videos = videos.clone();
-        use_effect_with_deps(
-            move |_| {
-                let videos = videos.clone();
-                wasm_bindgen_futures::spawn_local(async move {
-                    let response = Request::get("/tutorial/data.json").send().await.unwrap();
-                    log::debug!("response:\n{:?}", response);
-                    let fetched_videos: Vec<Video> = response.json().await.unwrap();
-                    log::debug!("fetched_videos:\n{:?}", fetched_videos);
-                    videos.set(fetched_videos);
-                });
-                || ()
-            },
-            (),
-        );
-    }
+    // let videos = use_state(|| vec![]);
+    // {
+    //     let videos = videos.clone();
+    //     use_effect_with_deps(
+    //         move |_| {
+    //             let videos = videos.clone();
+    //             wasm_bindgen_futures::spawn_local(async move {
+    //                 let response = Request::get("/tutorial/data.json").send().await.unwrap();
+    //                 log::debug!("response:\n{:?}", response);
+    //                 let fetched_videos: Vec<Video> = response.json().await.unwrap();
+    //                 log::debug!("fetched_videos:\n{:?}", fetched_videos);
+    //                 videos.set(fetched_videos);
+    //             });
+    //             || ()
+    //         },
+    //         (),
+    //     );
+    // }
 
     let selected_video = use_state(|| None);
     let on_video_select = {

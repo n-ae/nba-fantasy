@@ -1,3 +1,3 @@
 output "url" {
-  value = data.external.curl.result.result
+  value = module.post-get-active-tunnel.url
 }

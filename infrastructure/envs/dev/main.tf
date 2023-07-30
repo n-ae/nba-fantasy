@@ -14,6 +14,11 @@ module "backend" {
   ]
 }
 
+module "cors-wrapper" {
+  source = "./../../modules/cors-wrapper"
+  stage  = module.env.stage
+}
+
 module "frontend" {
   source          = "./../../modules/frontend"
   oauth_token_url = module.backend.function_url
