@@ -24,6 +24,10 @@ concurrency:
 
 jobs:
   # Single deploy job since we're just deploying
+    defaults:
+      run:
+        working-directory: ./frontend
+
   deploy:
     environment:
       # name: github-pages
@@ -42,24 +46,22 @@ jobs:
           target: wasm32-unknown-unknown
       - name: Set Build Environment
         run: |
-          cd frontend
           touch .env
           echo YAHOO_OAUTH_CLIENT_ID=${{ vars.YAHOO_OAUTH_CLIENT_ID }} >> .env
           echo YAHOO_OAUTH_TOKEN_URL=${{ vars.YAHOO_OAUTH_TOKEN_URL }} >> .env
           echo CORS_REVERSE_PROXY_ENDPOINT=${{ vars.CORS_REVERSE_PROXY_ENDPOINT }} >> .env
       - name: Build release
         run: |
-          cd frontend
           # trunk build --public-url /nba-fantasy --release
           # dynamic equivalent
-          trunk build --public-url /prod-${GITHUB_REPOSITORY#*/} --release
+          trunk build --public-url /${GITHUB_REPOSITORY#*/} --release
         shell: sh
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: "./frontend/dist"
+          path: "./dist"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
