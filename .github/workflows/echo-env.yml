@@ -13,5 +13,6 @@ jobs:
           printenv YAHOO_OAUTH_CLIENT_ID
           echo '${{ secrets.YAHOO_OAUTH_TOKEN_URL}}'
           echo ${{ secrets.YAHOO_OAUTH_TOKEN_URL}}
+          echo ${{ vars.YAHOO_OAUTH_TOKEN_URL}}
           echo ${{ env.YAHOO_OAUTH_TOKEN_URL}}
           echo ${{ secrets.CORS_REVERSE_PROXY_ENDPOINT}}
