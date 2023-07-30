@@ -43,9 +43,9 @@ jobs:
         run: |
           cd frontend
           touch .env
-          echo YAHOO_OAUTH_CLIENT_ID=${{ secrets.YAHOO_OAUTH_CLIENT_ID }} >> .env
-          echo YAHOO_OAUTH_TOKEN_URL=${{ secrets.YAHOO_OAUTH_TOKEN_URL }} >> .env
-          echo CORS_REVERSE_PROXY_ENDPOINT=${{ secrets.CORS_REVERSE_PROXY_ENDPOINT }} >> .env
+          echo YAHOO_OAUTH_CLIENT_ID=${{ env.YAHOO_OAUTH_CLIENT_ID }} >> .env
+          echo YAHOO_OAUTH_TOKEN_URL=${{ env.YAHOO_OAUTH_TOKEN_URL }} >> .env
+          echo CORS_REVERSE_PROXY_ENDPOINT=${{ env.CORS_REVERSE_PROXY_ENDPOINT }} >> .env
       - name: Build release
         run: |
           cd frontend
