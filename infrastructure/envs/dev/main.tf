@@ -2,6 +2,10 @@ module "env" {
   source = "./../../modules/env"
 }
 
+module "frontend-https-tunnel" {
+  source = "./../../modules/https-tunnel"
+}
+
 module "backend" {
   source = "./../../modules/backend"
   stage  = module.env.stage
@@ -13,10 +17,6 @@ module "backend" {
 module "frontend" {
   source          = "./../../modules/frontend"
   oauth_token_url = module.backend.function_url
-}
-
-module "frontend-https-tunnel" {
-  source = "./../../modules/https-tunnel"
 }
 
 # [DEBUG].[backend]
