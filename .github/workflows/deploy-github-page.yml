@@ -52,7 +52,7 @@ jobs:
           cd frontend
           # trunk build --public-url /nba-fantasy --release
           # dynamic equivalent
-          trunk build --public-url /${GITHUB_REPOSITORY#*/} --release
+          trunk build --public-url /${GITHUB_REPOSITORY#*/}/prod --release
         shell: sh
       - name: Setup Pages
         uses: actions/configure-pages@v3
