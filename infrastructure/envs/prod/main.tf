@@ -33,6 +33,6 @@ module "read_dotenv_backend" {
 module "github" {
   source    = "./github"
   token     = var.github_token
-  variables = module.read_dotenv_frontend.result
+  variables = merge(module.read_dotenv_frontend.result, module.read_dotenv_backend.result)
   stage     = module.env.stage
 }
