@@ -23,8 +23,8 @@ locals {
 }
 
 resource "aws_lambda_function" "backend" {
-  filename      = local.package_file
-  function_name = local.function_name
+  filename         = local.package_file
+  function_name    = local.function_name
   role             = aws_iam_role.role.arn
   handler          = local.function_handler
   source_code_hash = filebase64sha256(local.package_file)
