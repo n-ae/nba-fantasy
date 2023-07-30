@@ -7,7 +7,7 @@ pub mod mvc {
         use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 
         std::env::set_var("RUST_LOG", "debug");
-        std::env::set_var("RUST_BACKTRACE", "1");
+        std::env::set_var("RUST_BACKTRACE", "full");
         env_logger::init();
 
         let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls()).unwrap();

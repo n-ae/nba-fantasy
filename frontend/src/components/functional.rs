@@ -20,7 +20,14 @@ pub fn view_info() -> Html {
                     let auth3 = auth2.expect("TODO: add error handling");
                     let asd2 = auth3.authentication().expect("TODO: add error handling");
                     let standings_url = "https://fantasysports.yahooapis.com/fantasy/v2/league/418.l.9097/standings?format=json";
-                    let url = [dotenv!("CORS_REVERSE_PROXY_ENDPOINT"), standings_url].join("/");
+                    let url = [dotenv!("CORS_REVERSE_PROXY_ENDPOINT"), standings_url]
+                        .iter()
+                        .copied()
+                        .skip_while(|&x| x.is_empty())
+                        .collect::<Vec<&str>>()
+                        .join("/")
+                        ;
+                    log::debug!("url:\n{:?}", url);
                     // let request = Request::get("https://cors-anywhere.herokuapp.com/https://fantasysports.yahooapis.com/fantasy/v2/league/418.l.9097/standings?format=json")
                     let request = Request::get(url.as_str())
                         .header("Authorization", format!("Bearer {}", &asd2.access_token).as_str())

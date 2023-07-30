@@ -23,9 +23,9 @@ locals {
 }
 
 resource "aws_lambda_function" "backend" {
-  filename         = local.package_file
-  function_name    = local.function_name
-  role             = "arn:aws:iam::502515897402:role/cargo-lambda-role-0b5b2467-4d2d-4433-bd9b-8e1166590954"
+  filename      = local.package_file
+  function_name = local.function_name
+  role             = aws_iam_role.role.arn
   handler          = local.function_handler
   source_code_hash = filebase64sha256(local.package_file)
   runtime          = "provided.al2"
@@ -33,7 +33,7 @@ resource "aws_lambda_function" "backend" {
   environment {
     variables = {
       # Debugging would be easier in non production environments
-      RUST_BACKTRACE = !local.is_prod ? "1" : null
+      RUST_BACKTRACE = !local.is_prod ? "full" : null
     }
   }
 
@@ -50,7 +50,6 @@ resource "aws_lambda_function_url" "backend" {
     allow_origins = var.allow_origins
   }
 }
-
 
 resource "aws_lambda_permission" "allow_invoke" {
   action                 = "lambda:InvokeFunctionUrl"
