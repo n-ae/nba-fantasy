@@ -4,11 +4,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  job1:
     runs-on: ubuntu-latest
+    environment: prod
     steps:
       - name: Not Implemented Yet
         run: |
           printenv YAHOO_OAUTH_CLIENT_ID
           echo '${{ secrets.YAHOO_OAUTH_TOKEN_URL}}'
+          echo ${{ secrets.YAHOO_OAUTH_TOKEN_URL}}
+          echo ${{ env.YAHOO_OAUTH_TOKEN_URL}}
           echo ${{ secrets.CORS_REVERSE_PROXY_ENDPOINT}}
