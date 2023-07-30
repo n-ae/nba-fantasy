@@ -1,4 +1,4 @@
-resource "null_resource" "env-debug-https-tunnel-url" {
+resource "null_resource" "set_dotenv" {
   triggers = { always_run = "${timestamp()}" }
 
   provisioner "local-exec" {
