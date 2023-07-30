@@ -1,0 +1,14 @@
+name: Echo Env
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Not Implemented Yet
+        run: |
+          echo ${{ env.YAHOO_OAUTH_CLIENT_ID}}
+          echo ${{ env.YAHOO_OAUTH_TOKEN_URL}}
+          echo ${{ env.CORS_REVERSE_PROXY_ENDPOINT}}
