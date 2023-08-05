@@ -1,5 +1,6 @@
-use gloo_net::http::Request;
-use yew::{function_component, html, use_effect_with_deps, use_state, Callback};
+// use gloo_net::http::Request;
+// use yew::{use_effect_with_deps};
+use yew::{function_component, html, use_state, Callback};
 
 use crate::components::video_details::VideoDetails;
 use crate::components::videos_list::VideosList;
@@ -24,7 +25,7 @@ pub enum AppRoute {
 pub fn app() -> Html {
     log::debug!("App Component entered...");
 
-    // let videos = use_state(|| vec![]);
+    let videos = use_state(|| vec![]);
     // {
     //     let videos = videos.clone();
     //     use_effect_with_deps(

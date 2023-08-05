@@ -11,14 +11,15 @@ module "backend" {
 }
 
 module "set_dotenv" {
-  source        = "./../../modules/env.set_dotenv"
-  project_name  = "frontend"
-  ENV_VAR_NAME  = "YAHOO_OAUTH_TOKEN_URL"
-  env_var_value = module.backend.function_url
+  source       = "./../../modules/env/set_dotenv"
+  project_name = "frontend"
+  env = {
+    YAHOO_OAUTH_TOKEN_URL = module.backend.function_url
+  }
 }
 
 module "read_dotenv_frontend" {
-  source    = "./../../modules/env.read_dotenv"
+  source    = "./../../modules/env/read_dotenv"
   file_path = "./../../../frontend/.env"
   depends_on = [
     module.set_dotenv,
@@ -26,7 +27,7 @@ module "read_dotenv_frontend" {
 }
 
 module "read_dotenv_backend" {
-  source    = "./../../modules/env.read_dotenv"
+  source    = "./../../modules/env/read_dotenv"
   file_path = "./../../../backend/.env"
 }
 

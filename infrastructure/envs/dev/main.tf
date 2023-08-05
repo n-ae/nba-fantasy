@@ -1,9 +1,10 @@
-# [DEBUG].[backend]
+# # [DEBUG].[backend]
 # module "https-tunnel-for-backend-debug" {
-#   source        = "./../../modules/env.set_dotenv"
-#   project_name  = "backend"
-#   ENV_VAR_NAME  = "CORS_ALLOWED_ORIGIN"
-#   env_var_value = module.frontend-https-tunnel.url
+#   source       = "./../../modules/env/set_dotenv"
+#   project_name = "backend"
+#   env = {
+#     CORS_ALLOWED_ORIGIN = module.frontend-https-tunnel.url
+#   }
 
 #   depends_on = [
 #     module.frontend-https-tunnel,
@@ -32,13 +33,14 @@ module "cors-wrapper" {
 }
 
 module "frontend" {
-  source          = "./../../modules/frontend"
-  oauth_token_url = module.backend.function_url
+  source                = "./../../modules/frontend"
+  oauth_token_url       = module.backend.function_url
+  yahoo_oauth_client_id = var.yahoo_oauth_client_id
 }
 
 module "update_oauth2_dev_server" {
   # developer yahoo data is inconsistent, perhaps multiple tries would help
-  count        = 6
+  count        = 16
   source       = "./../../modules/developer-yahoo"
   tunnel_url   = module.frontend-https-tunnel.url
   cookie_value = var.yahoo_cookie_value

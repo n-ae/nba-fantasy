@@ -27,7 +27,7 @@ resource "aws_lambda_function" "backend" {
   function_name    = local.function_name
   role             = aws_iam_role.role.arn
   handler          = local.function_handler
-  source_code_hash = filebase64sha256(local.package_file)
+  source_code_hash = fileexists(local.package_file) ? filebase64sha256(local.package_file) : null
   runtime          = "provided.al2"
   publish          = local.is_prod
   environment {

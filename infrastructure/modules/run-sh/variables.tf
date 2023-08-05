@@ -1,0 +1,3 @@
+variable "command" {
+  type = string
+}

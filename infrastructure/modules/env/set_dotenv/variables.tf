@@ -6,10 +6,6 @@ variable "project_name" {
   }
 }
 
-variable "ENV_VAR_NAME" {
-  type = string
-}
-
-variable "env_var_value" {
-  type = string
+variable "env" {
+  type = map(string)
 }
