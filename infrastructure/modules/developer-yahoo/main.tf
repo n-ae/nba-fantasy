@@ -7,11 +7,16 @@ resource "null_resource" "main" {
   }
 
   provisioner "local-exec" {
-    command = <<EOT
-"${path.module}/main.sh" \
+    working_dir = path.module
+    command     = <<EOT
+./main.sh \
 "${var.tunnel_url}" \
 "${var.cookie_value}" \
 "${var.csrf}"
 EOT
+    interpreter = [
+      "sh",
+      "-c",
+    ]
   }
 }
