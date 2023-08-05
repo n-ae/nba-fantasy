@@ -28,6 +28,11 @@ curl -s -o /dev/null -i -w "%{http_code}" --location --request PUT 'https://deve
 }'
 )
 
+if [ "$result" != "200" ]; then
+    echo "Error: $result"
+    exit 1
+fi
+
 # Safely produce a JSON object containing the result value.
 # jq will ensure that the value is properly quoted
 # and escaped to produce a valid JSON string.
