@@ -1,6 +1,7 @@
 locals {
-  project_name     = "frontend"
-  dotenv_file_path = "./../../../${local.project_name}/.env"
+  project_name                        = "frontend"
+  get_trunk_server_process_id_command = "pgrep trunk"
+  dotenv_file_path                    = "./../../../${local.project_name}/.env"
   env = {
     YAHOO_OAUTH_TOKEN_URL       = var.oauth_token_url
     YAHOO_OAUTH_CLIENT_ID       = var.yahoo_oauth_client_id
@@ -16,15 +17,19 @@ module "set_dotenv" {
 
 module "check_frontend" {
   source  = "./../run-sh"
-  command = "pgrep trunk"
+  command = local.get_trunk_server_process_id_command
 }
 
-resource "null_resource" "frontend" {
-  triggers = {
-    exists = length(module.check_frontend.result) > 0
-    env    = join("\n", [for key, value in local.env : "${key}=${value}"])
-    # env    = fileexists(local.dotenv_file_path) ? filebase64sha256(local.dotenv_file_path) : null
 
+resource "terraform_data" "frontend" {
+  input = {
+    get_trunk_server_process_id_command = local.get_trunk_server_process_id_command
+    dotenv_file_path                    = local.dotenv_file_path
+  }
+
+  triggers_replace = {
+    exists = length(module.check_frontend.result) > 0
+    env    = sha1(join("\n", [for key, value in local.env : "${key}=${value}"]))
   }
 
   provisioner "local-exec" {
@@ -36,11 +41,10 @@ resource "null_resource" "frontend" {
   }
 
   provisioner "local-exec" {
-    when = destroy
-    # TODO: get command params dynamically
+    when    = destroy
     command = <<-EOT
-      kill -9 $(pgrep trunk) &>/dev/null &
-      ${path.module}/../env/delete_dotenv.sh YAHOO_OAUTH_TOKEN_URL ./../../../frontend
+      kill -9 $(${self.input.get_trunk_server_process_id_command}) &>/dev/null &
+      ${path.module}/../env/delete_dotenv.sh YAHOO_OAUTH_TOKEN_URL ${self.input.dotenv_file_path}
     EOT
   }
 

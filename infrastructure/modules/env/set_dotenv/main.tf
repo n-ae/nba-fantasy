@@ -9,23 +9,25 @@ module "dotenv" {
 }
 
 locals {
-  envs   = merge(module.dotenv.env, var.env)
-  dotenv = join("\n", [for key, value in local.envs : "${key}=${value}"])
+  env    = merge(module.dotenv.env, var.env)
+  dotenv = join("\n", [for key, value in local.env : "${key}=${value}"])
 }
 
 resource "null_resource" "set_dotenv" {
   triggers = {
-    dotenv      = sha1(local.dotenv)
-    dotenv_file = fileexists(local.file_path) ? filebase64sha256(local.file_path) : null
+    env = sha1(local.dotenv)
   }
 
   provisioner "local-exec" {
-    command = <<-EOT
-      pushd ${local.project_path}
+    working_dir = local.project_path
+    command     = <<-EOT
       touch .env.tmp
       echo '${local.dotenv}' >> .env.tmp
       mv .env.tmp .env
-      popd
-    EOT
+EOT
+    interpreter = [
+      "sh",
+      "-c",
+    ]
   }
 }
