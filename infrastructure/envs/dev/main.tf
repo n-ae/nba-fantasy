@@ -30,12 +30,16 @@ module "backend" {
 module "cors-wrapper" {
   source = "./../../modules/cors-wrapper"
   stage  = module.env.stage
+  allow_origins = [
+    module.frontend-https-tunnel.url,
+  ]
 }
 
 module "frontend" {
-  source                = "./../../modules/frontend"
-  oauth_token_url       = module.backend.function_url
-  yahoo_oauth_client_id = var.yahoo_oauth_client_id
+  source                      = "./../../modules/frontend"
+  oauth_token_url             = module.backend.function_url
+  yahoo_oauth_client_id       = var.yahoo_oauth_client_id
+  cors_reverse_proxy_endpoint = module.cors-wrapper.url
 }
 
 module "update_oauth2_dev_server" {

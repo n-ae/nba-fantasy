@@ -11,10 +11,6 @@ terraform {
   }
 }
 
-provider "aws" {
-  profile = "username"
-}
-
 locals {
   is_prod          = var.stage == module.env.stages.prod
   function_name    = "${var.stage}-backend"
