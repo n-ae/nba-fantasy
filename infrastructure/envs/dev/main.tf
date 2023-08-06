@@ -50,15 +50,3 @@ module "update_oauth2_dev_server" {
   cookie_value = var.yahoo_cookie_value
   csrf         = var.yahoo_csrf
 }
-
-output "update_oauth2_dev_server_results" {
-  value = {
-    for_each = {
-      for k, v in module.update_oauth2_dev_server : k => v.http_status_code
-    }
-  }
-}
-
-variable "yahoo_cookie_header" {
-  type = string
-}
