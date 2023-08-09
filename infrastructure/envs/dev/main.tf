@@ -25,6 +25,8 @@ module "backend" {
   allow_origins = [
     module.frontend-https-tunnel.url,
   ]
+  yahoo_oauth_client_id     = var.yahoo_oauth_client_id
+  yahoo_oauth_client_secret = var.yahoo_oauth_client_secret
 }
 
 module "cors-wrapper" {

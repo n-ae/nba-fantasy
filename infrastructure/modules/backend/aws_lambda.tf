@@ -15,7 +15,7 @@ locals {
   is_prod          = var.stage == module.env.stages.prod
   function_name    = "${var.stage}-backend"
   function_handler = "bootstrap"
-  package_file     = abspath("${path.module}/../../../backend/target/lambda/backend/bootstrap.zip")
+  package_file     = abspath("${path.module}/bootstrap.zip")
 }
 
 resource "aws_lambda_function" "backend" {

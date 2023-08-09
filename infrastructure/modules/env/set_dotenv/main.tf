@@ -1,5 +1,5 @@
 locals {
-  project_path = "./../../../${var.project_name}"
+  project_path = abspath("${path.module}./../../../../${var.project_name}")
   file_path    = "${local.project_path}/.env"
 }
 

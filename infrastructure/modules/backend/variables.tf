@@ -1,11 +1,15 @@
 variable "stage" {
   type = string
-  #   default = "dev"
-  #   validation {
-  #     condition = contains(["dev", "test", "prod"], var.env)
-  #   }
 }
 
 variable "allow_origins" {
   type = list(string)
+}
+
+variable "yahoo_oauth_client_id" {
+  type = string
+}
+
+variable "yahoo_oauth_client_secret" {
+  type = string
 }
