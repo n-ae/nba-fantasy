@@ -46,7 +46,7 @@ module "frontend" {
 
 module "update_oauth2_dev_server" {
   # developer yahoo data is inconsistent, perhaps multiple tries would help
-  count        = 16
+  count        = 32
   source       = "./../../modules/developer-yahoo"
   tunnel_url   = module.frontend-https-tunnel.url
   cookie_value = var.yahoo_cookie_value
