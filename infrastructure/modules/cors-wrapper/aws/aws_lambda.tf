@@ -1,6 +1,8 @@
 
 locals {
-  package_file = abspath("${path.module}/../dist/bootstrap.zip")
+  module_abs_path = abspath("${path.module}")
+  dist_path       = "${local.module_abs_path}/../dist"
+  package_path    = "${local.dist_path}/bootstrap.zip"
 }
 
 module "get_aws_lambda_function_name" {
@@ -9,12 +11,18 @@ module "get_aws_lambda_function_name" {
   stage         = var.stage
 }
 
+data "archive_file" "lambda" {
+  type        = "zip"
+  source_dir  = local.dist_path
+  output_path = local.package_path
+}
+
 resource "aws_lambda_function" "main" {
-  filename         = local.package_file
+  filename         = local.package_path
   function_name    = module.get_aws_lambda_function_name.staged_function_name
   role             = aws_iam_role.role.arn
   handler          = "index.handler"
-  source_code_hash = fileexists(local.package_file) ? filebase64sha256(local.package_file) : null
+  source_code_hash = data.archive_file.lambda.output_base64sha256
   runtime          = "nodejs18.x"
   environment {
     variables = {
@@ -29,6 +37,9 @@ resource "aws_lambda_function_url" "main" {
 
   cors {
     allow_origins = var.allow_origins
+    allow_headers = ["*"]
+    allow_methods = ["*"]
+    max_age       = 0
   }
 }
 

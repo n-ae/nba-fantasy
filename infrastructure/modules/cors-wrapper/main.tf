@@ -1,21 +1,25 @@
 locals {
   cors_anywhere_version = "0.4.4"
+  module_abs_path       = abspath(path.module)
   path = {
-    module_abs = abspath(path.module)
-    dist       = "${abspath(path.module)}/dist"
+    dist         = "${local.module_abs_path}/dist"
+    package_file = abspath("${local.module_abs_path}/bootstrap.zip")
   }
 }
 
 resource "terraform_data" "dist" {
   input = {
-    path                  = local.path,
+    path                  = local.path
     cors_anywhere_version = local.cors_anywhere_version
   }
 
-  triggers_replace = local.cors_anywhere_version
+  triggers_replace = {
+    version          = local.cors_anywhere_version
+    source_code_hash = fileexists(local.path.package_file) ? filebase64sha256(local.path.package_file) : null
+  }
 
   provisioner "local-exec" {
-    working_dir = self.input.path.module_abs
+    working_dir = local.module_abs_path
     command     = <<-EOT
 git clone --depth 1 --branch ${self.input.cors_anywhere_version} git@github.com:Rob--W/cors-anywhere.git ${self.input.path.dist} &2>/dev/null
 EOT
@@ -28,8 +32,8 @@ EOT
   provisioner "local-exec" {
     working_dir = self.input.path.dist
     command     = <<-EOT
-cp ${self.input.path.module_abs}/aws_lambda_wrapper/index.js .
-. ${self.input.path.module_abs}/aws_lambda_wrapper/build.sh
+cp ${local.module_abs_path}/aws_lambda_wrapper/index.js .
+. ${local.module_abs_path}/aws_lambda_wrapper/build.sh
 EOT
     interpreter = [
       "sh",
