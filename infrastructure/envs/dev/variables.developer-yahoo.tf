@@ -1,5 +1,6 @@
 variable "yahoo_cookie_value" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "yahoo_csrf" {
