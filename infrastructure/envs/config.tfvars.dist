@@ -1,0 +1,5 @@
+yahoo_oauth_client_id="<Get From https://developer.yahoo.com/apps>"
+yahoo_oauth_client_secret="<Get From https://developer.yahoo.com/apps>"
+yahoo_cookie_value="<Get From an update Redirect URI(s) request on https://developer.yahoo.com/apps>"
+yahoo_csrf="<Get From an update Redirect URI(s) requeston https://developer.yahoo.com/apps>"
+github_token="<Create and get value from https://github.com/settings/tokens?type=beta>"
