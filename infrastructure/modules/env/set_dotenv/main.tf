@@ -1,11 +1,12 @@
 locals {
-  project_path = abspath("${path.module}./../../../../${var.project_name}")
+  # project_path = abspath("${path.module}./../../../../${var.project_name}")
+  project_path = dirname(var.file_path)
   file_path    = "${local.project_path}/.env"
 }
 
 module "dotenv" {
   source    = "./../read_dotenv"
-  file_path = local.file_path
+  file_path = var.file_path
 }
 
 locals {

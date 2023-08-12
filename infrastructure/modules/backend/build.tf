@@ -1,6 +1,7 @@
 module "set_dotenv" {
   source       = "./../../modules/env/set_dotenv"
-  project_name = local.project_name
+  project_name = "TODO: DELETE ME"
+  file_path    = local.file_path
   env          = local.env
 }
 
