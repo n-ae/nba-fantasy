@@ -1,9 +1,3 @@
-locals {
-  # project_path = abspath("${path.module}./../../../../${var.project_name}")
-  project_path = dirname(var.file_path)
-  file_path    = "${local.project_path}/.env"
-}
-
 module "dotenv" {
   source    = "./../read_dotenv"
   file_path = var.file_path
@@ -20,7 +14,7 @@ resource "null_resource" "set_dotenv" {
   }
 
   provisioner "local-exec" {
-    working_dir = local.project_path
+    working_dir = dirname(var.file_path)
     command     = <<-EOT
       touch .env.tmp
       echo '${local.dotenv}' >> .env.tmp

@@ -1,7 +1,7 @@
 # # [DEBUG].[backend]
 # module "https-tunnel-for-backend-debug" {
 #   source       = "./../../modules/env/set_dotenv"
-#   project_name = "backend"
+#   file_path = abspath("./../../../backend/.env")
 #   env = {
 #     CORS_ALLOWED_ORIGIN = module.frontend-https-tunnel.url
 #   }

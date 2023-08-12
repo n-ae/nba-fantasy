@@ -1,7 +1,6 @@
 locals {
-  project_name                        = "frontend"
   get_trunk_server_process_id_command = "pgrep trunk"
-  dotenv_file_path                    = "./../../../${local.project_name}/.env"
+  dotenv_file_path                    = abspath("./../../../frontend/.env")
   env = {
     YAHOO_OAUTH_TOKEN_URL       = var.oauth_token_url
     YAHOO_OAUTH_CLIENT_ID       = var.yahoo_oauth_client_id
@@ -10,9 +9,9 @@ locals {
 }
 
 module "set_dotenv" {
-  source       = "./../../modules/env/set_dotenv"
-  project_name = local.project_name
-  env          = local.env
+  source    = "./../../modules/env/set_dotenv"
+  file_path = local.dotenv_file_path
+  env       = local.env
 }
 
 module "check_frontend" {

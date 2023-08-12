@@ -25,9 +25,8 @@ module "cors-wrapper" {
 }
 
 module "set_dotenv" {
-  source       = "./../../modules/env/set_dotenv"
-  project_name = "frontend"
-  file_path    = abspath("./../../../frontend/.env")
+  source    = "./../../modules/env/set_dotenv"
+  file_path = abspath("./../../../frontend/.env")
   env = {
     YAHOO_OAUTH_TOKEN_URL       = module.backend.function_url
     CORS_REVERSE_PROXY_ENDPOINT = module.cors-wrapper.url
