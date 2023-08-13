@@ -16,9 +16,16 @@ module "backend" {
   yahoo_oauth_client_secret = var.yahoo_oauth_client_secret
 }
 
+module "get_aws_lambda_function_name" {
+  source        = "../../modules/env/get_aws_lambda_function_name"
+  function_name = "cors-wrapper"
+  stage         = module.env.stage
+}
+
 module "cors-wrapper" {
-  source = "./../../modules/cors-wrapper"
-  stage  = module.env.stage
+  source        = "n-ae/lambda-cors-anywhere/aws"
+  version       = "0.1.0"
+  function_name = module.get_aws_lambda_function_name.staged_function_name
   allow_origins = [
     local.frontend_endpoint,
   ]
