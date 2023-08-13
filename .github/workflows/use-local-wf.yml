@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     # uses: "./.github/workflows/echo-branch.yml"
-    # uses: "bali-ibrahim/nba-fantasy/.github/workflows/echo-branch.yml@test"
+    # uses: "n-ae/nba-fantasy/.github/workflows/echo-branch.yml@test"
     uses: "./.github/workflows/conditional-set.yml"
     with:
       # env: "stg"

@@ -20,8 +20,8 @@ curl -s -o /dev/null -i -w "%{http_code}" --location --request PUT 'https://deve
     "namespace": "yahoo",
     "isConfidentialClientType": true,
     "redirectUris": [
-        "https://bali-ibrahim.github.io/nba-fantasy/",
-        "https://bali-ibrahim.github.io",
+        "https://n-ae.github.io/nba-fantasy/",
+        "https://n-ae.github.io",
         "'${tunnel_url}'"
     ],
     "csrf": "'${csrf}'"

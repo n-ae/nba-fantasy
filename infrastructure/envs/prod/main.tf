@@ -3,7 +3,7 @@ module "env" {
 }
 
 locals {
-  frontend_endpoint = "https://bali-ibrahim.github.io"
+  frontend_endpoint = "https://n-ae.github.io"
 }
 
 module "backend" {

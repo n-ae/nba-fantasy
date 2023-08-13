@@ -8,5 +8,5 @@ terraform {
 }
 
 data "github_repository" "repo" {
-  full_name = "bali-ibrahim/nba-fantasy"
+  full_name = "n-ae/nba-fantasy"
 }

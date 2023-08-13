@@ -1,5 +1,5 @@
 data "github_user" "current" {
-  username = "bali-ibrahim"
+  username = "n-ae"
 }
 
 resource "github_repository_environment" "env" {

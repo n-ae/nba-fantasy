@@ -1,6 +1,5 @@
 #!/bin/sh
-destroy()
-{
+destroy(){
     terraform destroy -var-file="./../config.tfvars" -auto-approve
 }
 
