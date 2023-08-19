@@ -1,3 +1,4 @@
+// use crate::components::view::ViewAuthContext;
 use crate::model::standings_response::StandingsResponse;
 use gloo_net::http::Request;
 use yew::prelude::*;
@@ -6,16 +7,17 @@ use yew_oauth2::prelude::*;
 #[function_component(ViewAuthInfoFunctional)]
 pub fn view_info() -> Html {
     let auth = use_context::<OAuth2Context>();
-    let auth2 = use_context::<OAuth2Context>();
     let response = use_state(|| None);
-
     {
+        let auth = auth.clone();
         let response = response.clone();
         use_effect_with_deps(
             move |_| {
                 wasm_bindgen_futures::spawn_local(async move {
-                    let auth3 = auth2.expect("TODO: add error handling");
-                    let asd2 = auth3.authentication().expect("TODO: add error handling");
+                    let auth_binding = auth.expect("TODO: add error handling");
+                    let oauth2_info = auth_binding
+                        .authentication()
+                        .expect("TODO: add error handling");
                     let standings_url = "https://fantasysports.yahooapis.com/fantasy/v2/league/418.l.9097/standings?format=json";
                     let url = [dotenv!("CORS_REVERSE_PROXY_ENDPOINT"), standings_url]
                         .iter()
@@ -25,7 +27,7 @@ pub fn view_info() -> Html {
                         .join("/");
                     let request = Request::get(url.as_str()).header(
                         "Authorization",
-                        format!("Bearer {}", &asd2.access_token).as_str(),
+                        format!("Bearer {}", &oauth2_info.access_token).as_str(),
                     );
                     let auth_response = request.send().await.unwrap();
                     log::debug!("auth_response:\n{:?}", auth_response);
@@ -39,6 +41,7 @@ pub fn view_info() -> Html {
         );
     }
 
+    let auth = use_context::<OAuth2Context>();
     html!(
         <>
         if let Some(r) = (*response).as_ref() {
