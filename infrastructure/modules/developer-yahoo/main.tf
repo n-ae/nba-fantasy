@@ -1,4 +1,5 @@
 resource "null_resource" "main" {
+  count = length(var.credentials)
   triggers = {
     tunnel_url = var.tunnel_url
     dir_sha1 = sha1(join("", [
@@ -11,8 +12,8 @@ resource "null_resource" "main" {
     command     = <<EOT
 ./main.sh \
 "${var.tunnel_url}" \
-"${var.cookie_value}" \
-"${var.csrf}"
+"${var.credentials[count.index].cookie_value}" \
+"${var.credentials[count.index].csrf}"
 EOT
     interpreter = [
       "sh",

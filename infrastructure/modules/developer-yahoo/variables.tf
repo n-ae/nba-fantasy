@@ -2,10 +2,9 @@ variable "tunnel_url" {
   type = string
 }
 
-variable "cookie_value" {
-  type    = string
-}
-
-variable "csrf" {
-  type    = string
+variable "credentials" {
+  type = list(object({
+    csrf         = string
+    cookie_value = string
+  }))
 }
