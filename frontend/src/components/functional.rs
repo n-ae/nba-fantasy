@@ -1,5 +1,6 @@
 // use crate::components::view::ViewAuthContext;
 use crate::model::standings_response::StandingsResponse;
+use crate::proxy::get_proxied_url;
 use gloo_net::http::Request;
 use yew::prelude::*;
 use yew_oauth2::prelude::*;
@@ -18,13 +19,7 @@ pub fn view_info() -> Html {
                     let oauth2_info = auth_binding
                         .authentication()
                         .expect("TODO: add error handling");
-                    let standings_url = "https://fantasysports.yahooapis.com/fantasy/v2/league/418.l.9097/standings?format=json";
-                    let url = [dotenv!("CORS_REVERSE_PROXY_ENDPOINT"), standings_url]
-                        .iter()
-                        .copied()
-                        .skip_while(|&x| x.is_empty())
-                        .collect::<Vec<&str>>()
-                        .join("/");
+                    let url = get_proxied_url("https://fantasysports.yahooapis.com/fantasy/v2/league/418.l.9097/standings?format=json");
                     let request = Request::get(url.as_str()).header(
                         "Authorization",
                         format!("Bearer {}", &oauth2_info.access_token).as_str(),
