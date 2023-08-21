@@ -41,6 +41,7 @@ module "cors-wrapper" {
   function_name = module.get_aws_lambda_function_name.staged_function_name
   allow_origins = [
     module.frontend-https-tunnel.url,
+    "https://nba-fantasy.pages.dev",
   ]
 }
 
@@ -48,7 +49,7 @@ module "frontend" {
   source                      = "./../../modules/frontend"
   oauth_token_url             = module.backend.function_url
   yahoo_oauth_client_id       = var.yahoo_oauth_client_id
-  cors_reverse_proxy_endpoint = module.cors-wrapper.url
+  cors_reverse_proxy_endpoint = trimsuffix(module.cors-wrapper.url, "/")
 }
 
 module "read_dotenv" {

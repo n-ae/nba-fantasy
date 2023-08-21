@@ -7,6 +7,7 @@ use crate::components::videos_list::VideosList;
 use crate::model::video::Video;
 
 use crate::components::functional::ViewAuthInfoFunctional;
+use crate::proxy::get_proxied_url;
 use yew::prelude::*;
 use yew_oauth2::prelude::*;
 
@@ -65,9 +66,10 @@ pub fn app() -> Html {
 
     let config = Config {
         client_id: dotenv!("YAHOO_OAUTH_CLIENT_ID").to_string(),
-        auth_url: "https://api.login.yahoo.com/oauth2/request_auth".into(),
+        auth_url: get_proxied_url("https://api.login.yahoo.com/oauth2/request_auth").into(),
         token_url: dotenv!("YAHOO_OAUTH_TOKEN_URL").to_string(),
     };
+    log::debug!("config:\n{:#?}", &config);
 
     html! {
         <>
