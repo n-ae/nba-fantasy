@@ -1,8 +1,10 @@
 #!/bin/sh
 
 tunnel_url=$1
-cookie_value=$2
+raw_cookie_value=$2
 csrf=$3
+current_unix_epoch=$(date +%s)
+cookie_value=$(echo ${raw_cookie_value} | sed -e "s/{unix_epoch}/${current_unix_epoch}/g")
 
 result=$(
 curl -s -o /dev/null -i -w "%{http_code}" --location --request PUT 'https://developer.yahoo.com/apps/vTNpBd74/' \
@@ -22,6 +24,7 @@ curl -s -o /dev/null -i -w "%{http_code}" --location --request PUT 'https://deve
     "redirectUris": [
         "https://n-ae.github.io/nba-fantasy/",
         "https://n-ae.github.io",
+        "https://nba-fantasy.pages.dev/",
         "'${tunnel_url}'"
     ],
     "csrf": "'${csrf}'"
