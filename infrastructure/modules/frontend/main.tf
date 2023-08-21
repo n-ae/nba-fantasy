@@ -43,7 +43,7 @@ resource "terraform_data" "frontend" {
     when    = destroy
     command = <<-EOT
       kill -9 $(${self.input.get_trunk_server_process_id_command}) &>/dev/null &
-      ${path.module}/../env/delete_dotenv.sh YAHOO_OAUTH_TOKEN_URL ${self.input.dotenv_file_path}
+      # ${path.module}/../env/delete_dotenv.sh YAHOO_OAUTH_TOKEN_URL ${self.input.dotenv_file_path}
     EOT
   }
 

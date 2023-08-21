@@ -24,7 +24,7 @@ curl -s -o /dev/null -i -w "%{http_code}" --location --request PUT 'https://deve
     "redirectUris": [
         "https://n-ae.github.io/nba-fantasy/",
         "https://n-ae.github.io",
-        "https://nba-fantasy.pages.dev/",
+        "https://nba-fantasy.pages.dev",
         "'${tunnel_url}'"
     ],
     "csrf": "'${csrf}'"

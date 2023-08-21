@@ -62,7 +62,7 @@ module "read_dotenv" {
 
 module "update_oauth2_dev_server" {
   # developer yahoo data is inconsistent, perhaps multiple tries would help
-  count       = 32
+  # count       = 32
   source      = "./../../modules/developer-yahoo"
   tunnel_url  = module.frontend-https-tunnel.url
   credentials = var.yahoo_credentials
