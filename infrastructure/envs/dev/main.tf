@@ -51,10 +51,25 @@ module "frontend" {
   cors_reverse_proxy_endpoint = module.cors-wrapper.url
 }
 
+module "read_dotenv" {
+  source    = "../../modules/env/read_dotenv"
+  file_path = "./../../../frontend/.env"
+
+  depends_on = [
+    module.frontend,
+  ]
+}
+
 module "update_oauth2_dev_server" {
   # developer yahoo data is inconsistent, perhaps multiple tries would help
   count       = 32
   source      = "./../../modules/developer-yahoo"
   tunnel_url  = module.frontend-https-tunnel.url
   credentials = var.yahoo_credentials
+}
+
+module "cloudflare" {
+  source    = "../../modules/cloudflare"
+  api_token = var.cloudflare_api_token
+  env       = module.read_dotenv.env
 }
