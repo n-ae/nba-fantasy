@@ -36,9 +36,8 @@ module "get_aws_lambda_function_name" {
 }
 
 module "cors-wrapper" {
-  source        = "~/dev/terraform-aws-lambda-cors-anywhere"
-  # source        = "n-ae/lambda-cors-anywhere/aws"
-  # version       = "0.3.1"
+  source        = "n-ae/lambda-cors-anywhere/aws"
+  version       = "0.3.1"
   function_name = module.get_aws_lambda_function_name.staged_function_name
   allow_origins = [
     module.frontend-https-tunnel.url,
