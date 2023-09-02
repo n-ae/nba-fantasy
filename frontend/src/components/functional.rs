@@ -1,4 +1,4 @@
-// use crate::components::view::ViewAuthContext;
+use crate::components::view::ViewAuthContext;
 use crate::model::standings_response::StandingsResponse;
 use crate::proxy::get_proxied_url;
 use gloo_net::http::Request;
@@ -15,7 +15,7 @@ pub fn view_info() -> Html {
         use_effect_with_deps(
             move |_| {
                 wasm_bindgen_futures::spawn_local(async move {
-                    let auth_binding = auth.expect("TODO: add error handling");
+                    let auth_binding = &auth.expect("TODO: add error handling");
                     let oauth2_info = auth_binding
                         .authentication()
                         .expect("TODO: add error handling");
@@ -24,10 +24,11 @@ pub fn view_info() -> Html {
                         "Authorization",
                         format!("Bearer {}", &oauth2_info.access_token).as_str(),
                     );
+                    log::debug!("url:\n{:#?}", &url);
                     let auth_response = request.send().await.unwrap();
-                    log::debug!("auth_response:\n{:?}", auth_response);
 
                     let s: StandingsResponse = auth_response.json().await.unwrap();
+                    log::debug!("s:\n{:?}", &s);
                     response.set(Some(s.clone()));
                 });
                 || ()
@@ -36,15 +37,16 @@ pub fn view_info() -> Html {
         );
     }
 
-    let auth = use_context::<OAuth2Context>();
+    // let auth = use_context::<OAuth2Context>();
     html!(
         <>
         if let Some(r) = (*response).as_ref() {
-            <h3> { format!("{:?}", r.fantasy_content.league[0].name.clone().unwrap()) } </h3>
+            <h3> { format!("{:#?}", r.fantasy_content.league[0].name.clone().unwrap()) } </h3>
+            <h3> { format!("{:#?}", r.fantasy_content.league[0].clone()) } </h3>
         }
         if let Some(auth) = auth {
                 <h2> { "Function component example"} </h2>
-                // <ViewAuthContext {auth} />
+                <ViewAuthContext {auth} />
             } else {
                 { "OAuth2 context not found." }
             }
