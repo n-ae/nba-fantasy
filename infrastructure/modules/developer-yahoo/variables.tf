@@ -7,4 +7,5 @@ variable "credentials" {
     csrf         = string
     cookie_value = string
   }))
+  sensitive = true
 }
