@@ -13,6 +13,7 @@ reqwest = "0.11.12"
 serde = "1.0.147"
 wasm-bindgen-futures = "0.4.33"
 wasm-logger = "0.2.0"
+yahoo-fantasy-sports-api = {path = "../yahoo-fantasy-sports-api"}
 yew = "0.19.3"
 yew-oauth2 = "0.4.0"
 yew-router = {version = "0.16", package = "yew-router-nested"}

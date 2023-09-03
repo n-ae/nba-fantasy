@@ -7,7 +7,6 @@ use crate::components::videos_list::VideosList;
 use crate::model::video::Video;
 
 use crate::components::functional::ViewAuthInfoFunctional;
-use crate::proxy::get_proxied_url;
 use yew::prelude::*;
 use yew_oauth2::prelude::*;
 
