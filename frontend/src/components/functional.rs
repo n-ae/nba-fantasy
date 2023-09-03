@@ -25,10 +25,11 @@ pub fn view_info() -> Html {
                         format!("Bearer {}", &oauth2_info.access_token).as_str(),
                     );
                     log::debug!("url:\n{:#?}", &url);
-                    let auth_response = request.send().await.unwrap();
+                    let resp: gloo_net::http::Response = request.send().await.unwrap();
+                    log::debug!("resp:\n{:?}", &resp);
 
-                    let s: StandingsResponse = auth_response.json().await.unwrap();
-                    log::debug!("s:\n{:?}", &s);
+                    let s: StandingsResponse = resp.json().await.unwrap();
+                    log::debug!("standings_response:\n{:?}", &s);
                     response.set(Some(s.clone()));
                 });
                 || ()
@@ -42,7 +43,7 @@ pub fn view_info() -> Html {
         <>
         if let Some(r) = (*response).as_ref() {
             <h3> { format!("{:#?}", r.fantasy_content.league[0].name.clone().unwrap()) } </h3>
-            <h3> { format!("{:#?}", r.fantasy_content.league[0].clone()) } </h3>
+            <h3> { format!("{:#?}", r.fantasy_content.league[1].standings.clone().unwrap()) } </h3>
         }
         if let Some(auth) = auth {
                 <h2> { "Function component example"} </h2>

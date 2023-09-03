@@ -1,7 +1,8 @@
-use serde::Deserialize;
-use yew::Properties;
+use std::collections::HashMap;
 
-#[derive(Clone, Debug, Deserialize, PartialEq, Properties)]
+use serde::Deserialize;
+
+#[derive(Clone, Debug, Deserialize, PartialEq)]
 pub struct League {
     pub end_date: Option<String>,
     pub end_week: Option<String>,
@@ -32,9 +33,11 @@ pub struct League {
     pub league_id: Option<String>,
     pub iris_group_chat_id: Option<String>,
     pub game_code: Option<String>,
+
+    pub standings: Option<Vec<Standings>>,
 }
 
-#[derive(Clone, Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq)]
 pub struct FantasyContent {
     pub xml_lang: Option<String>,
     pub copyright: String,
@@ -49,18 +52,21 @@ pub struct StandingsResponse {
     pub fantasy_content: FantasyContent,
 }
 
-#[derive(Debug, Deserialize)]
-struct StandingsEntry {
-    teams: Team,
+#[derive(Clone, Debug, Deserialize, PartialEq)]
+pub struct Standings {
+    pub teams: Teams,
 }
 
-#[derive(Debug, Deserialize)]
-struct Team {}
+#[derive(Clone, Debug, Deserialize, PartialEq)]
+pub struct Team {
+    // pub team:
+    // Define the fields of the Team struct as needed
+    // For example: pub field_name: field_type,
+}
 
-#[derive(Debug, Deserialize)]
-enum LeagueVariant {
-    #[serde(rename = "standings")]
-    Standings(Vec<StandingsEntry>),
-    #[serde(rename = "")]
-    Other(League),
+#[derive(Clone, Debug, Deserialize, PartialEq)]
+pub struct Teams {
+    #[serde(flatten)]
+    data: HashMap<String, Team>,
+    count: u8,
 }
